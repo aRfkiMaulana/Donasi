@@ -4,6 +4,8 @@ import 'login.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,6 +22,8 @@ class HomePage extends StatelessWidget {
     {'icon': Icons.group, 'label': 'Sosial'},
     {'icon': Icons.favorite, 'label': 'Kesehatan'},
   ];
+
+  HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +109,7 @@ class HomePage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Aksi Penyaluran Dana Bantuan Banjir Loa Janan',
+                          'Anjay Penyaluran Dana Bantuan Banjir Loa Janan',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16,

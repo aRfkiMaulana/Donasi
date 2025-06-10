@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'daftar.dart'; // Pastikan path ini sesuai dengan file daftar.dart
+import 'daftar.dart';
+import 'lupas.dart';
 
 class LoginPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+
+  LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -87,44 +90,56 @@ class LoginPage extends StatelessWidget {
                       ),
                       elevation: 5,
                     ),
-                    child: Text('Masuk'),
+                    child: Text(
+                      'Masuk',
+                      style: TextStyle(fontSize: 16, color: Colors.white),
+                    ),
                   ),
                 ),
                 SizedBox(height: 16),
 
                 // Link Daftar
-                Text.rich(
-                  TextSpan(
-                    text: 'Belum memiliki akun? ',
-                    children: [
-                      WidgetSpan(
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => RegisterPage()),
-                            );
-                          },
-                          child: Text(
-                            'Daftar.',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.indigo[600],
-                            ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Belum memiliki akun? '),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => RegisterPage(),
                           ),
+                        );
+                      },
+                      child: Text(
+                        'Daftar.',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.indigo[600],
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
                 SizedBox(height: 8),
 
                 // Link Lupa Password
-                Text(
-                  'Lupa password?',
-                  style: TextStyle(
-                    color: Colors.indigo,
-                    fontWeight: FontWeight.bold,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ForgotPasswordScreen(),
+                      ),
+                    );
+                  },
+                  child: Text(
+                    'Lupa password?',
+                    style: TextStyle(
+                      color: Colors.indigo,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 SizedBox(height: 16),
@@ -137,7 +152,7 @@ class LoginPage extends StatelessWidget {
                       TextSpan(
                         text: 'InformaticsZone',
                         style: TextStyle(color: Colors.indigo),
-                      )
+                      ),
                     ],
                   ),
                   style: TextStyle(fontSize: 12),
