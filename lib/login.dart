@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'daftar.dart'; // Pastikan path ini sesuai dengan file daftar.dart
 
 class LoginPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
@@ -96,13 +97,23 @@ class LoginPage extends StatelessWidget {
                   TextSpan(
                     text: 'Belum memiliki akun? ',
                     children: [
-                      TextSpan(
-                        text: 'Daftar.',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.indigo[600],
+                      WidgetSpan(
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => RegisterPage()),
+                            );
+                          },
+                          child: Text(
+                            'Daftar.',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.indigo[600],
+                            ),
+                          ),
                         ),
-                      )
+                      ),
                     ],
                   ),
                 ),
