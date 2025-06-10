@@ -42,7 +42,7 @@ class RegisterPage extends StatelessWidget {
               SizedBox(height: 20),
 
               // Input Fields
-              _buildTextField(Icons.person, 'Nama'),
+              _buildTextField(Icons.person, 'Nama1'),
               SizedBox(height: 12),
               _buildTextField(Icons.email, 'Email'),
               SizedBox(height: 12),

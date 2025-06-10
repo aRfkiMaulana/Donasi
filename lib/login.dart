@@ -1,12 +1,51 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'daftar.dart';
-import 'lupas.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'home_page.dart'; // Halaman HomePage
+import 'daftar.dart'; // Halaman RegisterPage
+import 'lupas.dart'; // Halaman ForgotPasswordScreen
 
 class LoginPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
   LoginPage({super.key});
+
+  Future<void> login(BuildContext context) async {
+    final response = await http.post(
+      Uri.parse('http://10.0.2.2:8000/api/login'),  // Pastikan URL API benar
+      body: {
+        'email': emailController.text,
+        'password': passwordController.text,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      // Jika login berhasil
+      var data = json.decode(response.body);
+      String token = data['token'];  // Ambil token dari respons
+
+      // Simpan token ke SharedPreferences
+      await saveToken(token);
+
+      // Pindahkan ke halaman home setelah login berhasil
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+    } else {
+      // Tampilkan pesan error jika login gagal
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Login gagal, cek email atau password')),
+      );
+    }
+  }
+
+  Future<void> saveToken(String token) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('auth_token', token);  // Menyimpan token
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,9 +118,7 @@ class LoginPage extends StatelessWidget {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {
-                      // TODO: Handle login
-                    },
+                    onPressed: () => login(context),  // Panggil fungsi login
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.symmetric(vertical: 14),
                       backgroundColor: Colors.indigo[600],

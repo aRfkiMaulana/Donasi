@@ -109,7 +109,7 @@ class HomePage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Anjay Penyaluran Dana Bantuan Banjir Loa Janan',
+                          'Aksi2 Penyaluran Dana Bantuan Banjir Loa Janan',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 16,
