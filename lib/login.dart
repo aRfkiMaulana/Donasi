@@ -25,6 +25,7 @@ class LoginPage extends StatelessWidget {
       // Jika login berhasil
       var data = json.decode(response.body);
       String token = data['token'];  // Ambil token dari respons
+      String username = data['name']?? 'pengguna';  // Ambil nama pengguna
 
       // Simpan token ke SharedPreferences
       await saveToken(token);
@@ -32,7 +33,7 @@ class LoginPage extends StatelessWidget {
       // Pindahkan ke halaman home setelah login berhasil
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => HomePage()),
+        MaterialPageRoute(builder: (context) => HomePage(username: username,)),
       );
     } else {
       // Tampilkan pesan error jika login gagal

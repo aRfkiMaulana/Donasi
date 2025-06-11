@@ -1,8 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'login.dart';
 
 class RegisterPage extends StatelessWidget {
-  const RegisterPage({super.key});
+  RegisterPage({super.key});
+
+  final TextEditingController namaController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController teleponController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController konfirmasiController = TextEditingController();
+
+  Future<void> register(BuildContext context) async {
+    if (passwordController.text != konfirmasiController.text) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Password dan konfirmasi tidak sama')),
+      );
+      return;
+    }
+
+    final response = await http.post(
+      Uri.parse('http://10.0.2.2:8000/api/register'), // Ganti dengan URL API Anda
+      body: {
+        'name': namaController.text,
+        'email': emailController.text,
+        'phone_number': teleponController.text,
+        'password': passwordController.text,
+        'password_confirm': konfirmasiController.text,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Registrasi berhasil, silakan login')),
+      );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => LoginPage()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Registrasi gagal')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,51 +56,17 @@ class RegisterPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Logo
-              Image.asset(
-                'assets/logo.png', // Ganti dengan logo kamu
-                width: 100,
-              ),
+              // ...existing code...
+              _buildTextField(Icons.person, 'Nama', controller: namaController),
               SizedBox(height: 12),
-              Text(
-                'Penuh\nPeduli',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue[900],
-                ),
-              ),
-
-              SizedBox(height: 40),
-              Text(
-                'Register',
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue[900],
-                ),
-              ),
-              SizedBox(height: 20),
-
-              // Input Fields
-              _buildTextField(Icons.person, 'Nama1'),
+              _buildTextField(Icons.email, 'Email', controller: emailController),
               SizedBox(height: 12),
-              _buildTextField(Icons.email, 'Email'),
+              _buildTextField(Icons.phone, 'Nomor Telepon', controller: teleponController),
               SizedBox(height: 12),
-              _buildTextField(Icons.phone, 'Nomor Telepon'),
+              _buildTextField(Icons.lock, 'Password', controller: passwordController, obscureText: true),
               SizedBox(height: 12),
-              _buildTextField(Icons.lock, 'Password', obscureText: true),
-              SizedBox(height: 12),
-              _buildTextField(
-                Icons.lock,
-                'Konfirmasi Password',
-                obscureText: true,
-              ),
-
+              _buildTextField(Icons.lock, 'Konfirmasi Password', controller: konfirmasiController, obscureText: true),
               SizedBox(height: 30),
-
-              // Button
               SizedBox(
                 width: double.infinity,
                 height: 48,
@@ -70,9 +78,7 @@ class RegisterPage extends StatelessWidget {
                     ),
                     elevation: 4,
                   ),
-                  onPressed: () {
-                    // Tambahkan aksi daftar di sini
-                  },
+                  onPressed: () => register(context),
                   child: Text(
                     'Daftar',
                     style: TextStyle(fontSize: 16, color: Colors.white),
@@ -125,8 +131,10 @@ class RegisterPage extends StatelessWidget {
     IconData icon,
     String hint, {
     bool obscureText = false,
+    TextEditingController? controller,
   }) {
     return TextField(
+      controller: controller,
       obscureText: obscureText,
       decoration: InputDecoration(
         prefixIcon: Icon(icon),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'login.dart';
+import 'pegdana.dart';
 
 void main() => runApp(MyApp());
 
@@ -10,7 +11,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Donasi App',
-      home: HomePage(),
+      home: PegDanaPage(),
       debugShowCheckedModeBanner: false,
     );
   }
