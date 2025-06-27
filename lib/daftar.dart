@@ -13,6 +13,18 @@ class RegisterPage extends StatelessWidget {
   final TextEditingController konfirmasiController = TextEditingController();
 
   Future<void> register(BuildContext context) async {
+
+    if (namaController.text.isEmpty ||
+      emailController.text.isEmpty ||
+      teleponController.text.isEmpty ||
+      passwordController.text.isEmpty ||
+      konfirmasiController.text.isEmpty) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Semua field wajib diisi')),
+    );
+    return;
+  }
+
     if (passwordController.text != konfirmasiController.text) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Password dan konfirmasi tidak sama')),
@@ -21,7 +33,7 @@ class RegisterPage extends StatelessWidget {
     }
 
     final response = await http.post(
-      Uri.parse('http://10.0.2.2:8000/api/register'), // Ganti dengan URL API Anda
+      Uri.parse('http://192.168.18.9:8000/api/register'), // Ganti dengan URL API Anda
       body: {
         'name': namaController.text,
         'email': emailController.text,
@@ -31,7 +43,7 @@ class RegisterPage extends StatelessWidget {
       },
     );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Registrasi berhasil, silakan login')),
       );

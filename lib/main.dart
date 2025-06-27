@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'login.dart';
 import 'pegdana.dart';
+import 'campaign_scroll.dart';
+import 'dart:io';
+import 'package:webview_flutter/webview_flutter.dart';
 
 void main() => runApp(MyApp());
 
@@ -11,7 +14,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Donasi App',
-      home: PegDanaPage(),
+      home: HomePage(),
       debugShowCheckedModeBanner: false,
     );
   }
@@ -51,16 +54,55 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: Icon(Icons.search, color: Colors.white),
-          ),
-        ],
       ),
       body: ListView(
         children: [
           SizedBox(height: 20),
+
+          // Berita utama
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Stack(
+                alignment: Alignment.center,
+                children: [
+                  Image.asset(
+                    'assets/ad.png', // Ganti dengan path gambar kamu
+                    height: 200,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
+                  Container(height: 200, color: Colors.black.withOpacity(0.4)),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'DONASI',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          'Orang-orang yang menginfakkan harta mereka di jalan Allah, kemudian tidak mengiringi apa yang mereka infakkan itu dengan menyebut-nyebutnya dan menyakiti (perasaan penerima), bagi mereka pahala di sisi Tuhan mereka. Tidak ada rasa takut pada mereka dan mereka tidak bersedih.” (QS Al Baqarah ayat 262).',
+                          style: TextStyle(color: Colors.white, fontSize: 13),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+          SizedBox(height: 30),
 
           // Menu Ikon
           Padding(
@@ -89,84 +131,9 @@ class HomePage extends StatelessWidget {
 
           SizedBox(height: 30),
 
-          // Berita utama
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-                  Image.asset(
-                    'assets/banjir.jpg', // Ganti dengan path gambar kamu
-                    height: 200,
-                    width: double.infinity,
-                    fit: BoxFit.cover,
-                  ),
-                  Container(height: 200, color: Colors.black.withOpacity(0.4)),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Aksi2 Penyaluran Dana Bantuan Banjir Loa Janan',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          textAlign: TextAlign.center,
-                        ),
-                        SizedBox(height: 10),
-                        Text(
-                          'Banjir terjadi di Loa Janan, sebanyak 18 lingkungan RT terendam banjir dengan ketinggian 30cm sampai 150cm akibat hujan deras dengan intensitas tinggi.',
-                          style: TextStyle(color: Colors.white, fontSize: 13),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          SizedBox(height: 30),
-
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Container(
-              height: 150,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  gradient: LinearGradient(
-                    colors: [Colors.blue.withOpacity(0.7), Colors.transparent],
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                  ),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Galang Dana\nSekarang',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            child: CampaignScroll(), // Tambahkan widget ini
           ),
 
           SizedBox(height: 30),
